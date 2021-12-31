@@ -10,20 +10,19 @@ private:
 	int width,
 		height;
 public:
-    Image(int w, int h);
+    Image(int w = 100, int h = 100);
     ~Image();
-//    void Image_free(Image *p);
-//    Image *Image_new(int width,int height);
-
+    Image(const Image& image);
+    Image& operator=(const Image& image);
     void clear(uint32_t c);
-//    void Image_drawHLine(Image *p,int x,int y,int w,uint32_t c);
-//    void Image_drawVLine(Image *p,int x,int y,int h,uint32_t c);
+    void drawHLine(int x,int y,int w,uint32_t c);
+    void drawVLine(int x,int y,int h,uint32_t c);
     void fillBox(int x,int y,int w,int h,uint32_t c);
-
     void setPixel(int x,int y,uint32_t c);
     void blendPixel(int x,int y,uint32_t c,int alpha);
-
     void writeBitmap(const char *filename);
+    int getWidth() { return width; };
+    int getHeight() { return height; };
 };
 
 #endif // IMAGE_H

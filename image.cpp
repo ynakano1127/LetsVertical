@@ -46,28 +46,52 @@ static void _write32(FILE *fp,uint32_t v)
 	fwrite(b, 1, 4, fp);
 }
 
-
-//==============================
-
-
-/* 解放 */
+Image::Image(int width,int height) : width(width), height(height)
+{
+    buf = new uint32_t[height * width];
+}
 
 Image::~Image()
 {
-    if(buf)
-    {
-        delete buf;
-	}
+    delete[] buf;
 }
 
-/* 作成 */
-
-Image::Image(int width,int height) : width(width), height(height)
+Image::Image(const Image& image)
 {
-    buf = (uint32_t *)malloc(width * height * 4);
+    if(&image == this){
+        delete[] buf;
+        width = 0;
+        height = 0;
+    }else{
+        width = image.width;
+        height = image.height;
+        buf = new uint32_t[height * width];
+
+        for(int h = 0; h < height; h++){
+            for(int w = 0; w < width; w++){
+                buf[h * width + w] = image.buf[h * width + w];
+            }
+        }
+    }
 }
 
-/* クリア */
+Image& Image::operator=(const Image &image)
+{
+    if(&image != this){
+        if (width!=image.width || height!=image.height) {
+            delete[] buf;
+            width = image.width;
+            height = image.height;
+            buf = new uint32_t[height * width];
+        }
+        for(int h = 0; h < height; h++){
+            for(int w = 0; w < width; w++){
+                buf[h * width + w] = image.buf[h * width + w];
+            }
+        }
+    }
+    return *this;
+}
 
 void Image::clear(uint32_t c)
 {
@@ -78,7 +102,17 @@ void Image::clear(uint32_t c)
 		*(pd++) = c;
 }
 
-/* 四角形塗りつぶし */
+void Image::drawHLine(int x, int y, int w, uint32_t c)
+{
+    for(; w > 0; w--)
+        setPixel(x++, y, c);
+}
+
+void Image::drawVLine(int x,int y,int h,uint32_t c)
+{
+    for(; h > 0; h--)
+        setPixel(x, y++, c);
+}
 
 void Image::fillBox(int x,int y,int w,int h,uint32_t c)
 {
@@ -110,15 +144,11 @@ void Image::fillBox(int x,int y,int w,int h,uint32_t c)
 	}
 }
 
-/* 点を打つ */
-
 void Image::setPixel(int x,int y,uint32_t c)
 {
     if(x >= 0 && y >= 0 && x < width && y < height)
         *(buf + y * width + x) = c;
 }
-
-/* 色を合成 */
 
 void Image::blendPixel(int x,int y,uint32_t c,int alpha)
 {
@@ -147,8 +177,6 @@ void Image::blendPixel(int x,int y,uint32_t c,int alpha)
 		*pd = _MAKE_COL(dr, dg, db);
 	}
 }
-
-/* BMP 画像で出力 */
 
 void Image::writeBitmap(const char *filename)
 {

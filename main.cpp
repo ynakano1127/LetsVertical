@@ -6,6 +6,7 @@
 #include "Test/gsubtest.h"
 #include "Test/writetest.h"
 #include "Test/fontanalysis.h"
+#include "Test/imagetest.h"
 
 using namespace std;
 
@@ -17,7 +18,8 @@ int main()
 //    tests.push_back(new FontSeekerTest());
 //    tests.push_back(new GsubTest());
 //    tests.push_back(new WriteTest());
-    tests.push_back(new FontAnalysis());
+//    tests.push_back(new FontAnalysis());
+    tests.push_back(new ImageTest());
 
     for(int i=0;i<tests.size();i++){
         tests[i]->run();

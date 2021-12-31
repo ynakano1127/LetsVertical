@@ -28,6 +28,7 @@ add_executable(OpenType2 main.cpp fontfile.h fontfile.cpp tag.h tag.cpp fontseek
     image.h image.cpp
     Test/writetest.h Test/writetest.cpp
     Test/fontanalysis.h Test/fontanalysis.cpp
+    Test/imagetest.h Test/imagetest.cpp
     )
 
 file(COPY NotoSansCJKjp-Thin.otf DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
