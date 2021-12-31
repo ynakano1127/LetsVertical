@@ -27,6 +27,8 @@ string fonts[] = {
     "ZenOldMincho-Regular.ttf"
 };
 
+int histogram[9];
+
 FontAnalysis::FontAnalysis()
 {
 
@@ -39,6 +41,7 @@ void print_feature(ofstream& stream, Gsub& gsub, Feature& feature) {
     for(uint16_t i : feature.getLookupListIndices()){
         lookup = lookups[i];
         stream << "\t" << "\t" << "\t" << lookup.getLookupType() << endl;
+        histogram[lookup.getLookupType()]++;
     }
 }
 
@@ -48,7 +51,6 @@ void print_langsys(ofstream& stream, Gsub& gsub, LangSys& langsys) {
     vector<FeatureRecord> feature_records = gsub.getFeatureList().getFeatureList();
     for(uint16_t i : langsys.getFeatureIndices()){
         FeatureRecord r = feature_records[i];
-        cout << "FeatureRecord Tag : " << r.getFeatureTag().toString() << endl;
         stream << "\t" << "\t" << r.getFeatureTag().toString() << endl;
         Feature feature = r.getFeature();
         print_feature(stream, gsub, feature);
@@ -58,13 +60,11 @@ void print_langsys(ofstream& stream, Gsub& gsub, LangSys& langsys) {
 void print_script(ofstream& stream, Gsub& gsub, Script& script) {
     LangSys langsys;
 
-    cout << "Default LangSys" << endl;
     stream << "\t" << "DefaultLangSys" << endl;
     langsys = script.getDefaultLangSys();
     print_langsys(stream, gsub, langsys);
 
     for(auto lang_sys_record : script.getLangSysList()) {
-        cout << "LangSysRecord Tag : " << lang_sys_record.getLangSysTag().toString() << endl;
         stream << "\t" << lang_sys_record.getLangSysTag().toString() << endl;
         langsys = lang_sys_record.getLangSys();
         print_langsys(stream, gsub, langsys);
@@ -72,6 +72,9 @@ void print_script(ofstream& stream, Gsub& gsub, Script& script) {
 }
 
 void FontAnalysis::run() {
+    for(int i=0; i < 9; i++)
+        histogram[i] = 0;
+
     for(string filename : fonts){
         ofstream stream(filename + "_analysis.txt", ios::out);
 
@@ -80,7 +83,6 @@ void FontAnalysis::run() {
         Script script;
 
         for(auto script_record : gsub.getScriptList().getScriptList()){
-            cout << "ScriptRecord Tag : " << script_record.getScriptTag().toString() << endl;
             string tag = script_record.getScriptTag().toString();
             if(!(tag=="DFLT" || tag=="hani" || tag=="kana"))
                 continue;
@@ -90,5 +92,9 @@ void FontAnalysis::run() {
         }
 
         stream.close();
+    }
+
+    for(int i=1; i<9; i++){
+        cout << i << " " << histogram[i] << endl;
     }
 }
