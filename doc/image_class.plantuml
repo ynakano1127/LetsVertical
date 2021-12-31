@@ -1,0 +1,34 @@
+@startuml class
+
+class Image {
+  +uint32_t *buf;
+  +int width,
+  +int height;
+
+  +Image(int w=100, int h=100);
+  +Image(const Image& image);
+  +Image& operator=(const Image& image);
+  +~Image();
+  +void clear(uint32_t c);
+  +void drawHLine(int x,int y,int w,uint32_t c);
+  +void drawVLine(int x,int y,int h,uint32_t c);
+  +void fillBox(int x,int y,int w,int h,uint32_t c);
+  +void setPixel(int x,int y,uint32_t c);
+  +void blendPixel(int x,int y,uint32_t c,int alpha);
+  +void writeBitmap(const char *filename);
+  +int getWidth()
+  +int getHeight()
+}
+
+class Canvas {
+  Image image
+  +Canvas()
+  +Canvas(int w, int h)
+  +~Canvas()
+  +int getWidth()
+  +int getHeight()
+  +void writeHeading(string heading, int n=0)
+  +void writeGlyphPair(FT_ULong left, FT_ULong right, int n=4)
+  +void writeGlyphPair(vector<FT_ULong> left, vector<FT_ULong> right, int n=4)
+  -void writeString(string s, int w, int h)
+}
