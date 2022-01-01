@@ -8,6 +8,7 @@
 #include "Test/fontanalysis.h"
 #include "Test/imagetest.h"
 #include "Test/canvastest.h"
+#include "Test/fontanalysis_bitmap.h"
 
 using namespace std;
 
@@ -21,7 +22,8 @@ int main()
 //    tests.push_back(new WriteTest());
 //    tests.push_back(new FontAnalysis());
 //    tests.push_back(new ImageTest());
-    tests.push_back(new CanvasTest());
+//    tests.push_back(new CanvasTest());
+    tests.push_back(new FontAnalysisBitmap());
 
     for(int i=0;i<tests.size();i++){
         tests[i]->run();

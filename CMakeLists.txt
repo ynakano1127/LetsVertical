@@ -29,6 +29,7 @@ add_executable(OpenType2 main.cpp fontfile.h fontfile.cpp tag.h tag.cpp fontseek
     canvas.h canvas.cpp
     Test/writetest.h Test/writetest.cpp
     Test/fontanalysis.h Test/fontanalysis.cpp
+    Test/fontanalysis_bitmap.h Test/fontanalysis_bitmap.cpp
     Test/imagetest.h Test/imagetest.cpp
     Test/canvastest.h Test/canvastest.cpp
     )
