@@ -4,25 +4,6 @@
 
 using namespace std;
 
-//string fonts2[] = {
-//    "HinaMincho-Regular.ttf",
-//    "KaiseiDecol-Regular.ttf",
-//    "KaiseiHarunoUmi-Regular.ttf",
-////    "KaiseiOpti-Regular.ttf",
-////    "KaiseiTokumin-Regular.ttf",
-////    "KiwiMaru-Regular.ttf",
-//    "NewTegomin-Regular.ttf",
-////    "NotoSerifJP-Regular.otf",
-////    "ShipporiMinchoB1-Regular.ttf",
-////    "ShipporiMincho-Regular.ttf",
-//    "YujiBoku-Regular.ttf",
-////    "YujiMai-Regular.ttf",
-////    "YujiSyuku-Regular.ttf",
-//    "ZenAntique-Regular.ttf",
-//    "ZenAntiqueSoft-Regular.ttf",
-//    "ZenOldMincho-Regular.ttf"
-//};
-
 
 string fonts2[] = {
     "HinaMincho-Regular.ttf",
@@ -60,6 +41,7 @@ void FontAnalysisBitmap::print_feature(FontSeeker& fs, Canvas& canvas, Gsub& gsu
                 LookupSubtableType1 lst1(fs, lookup.getLookupOffset() + offset);
                 Coverage coverage = lst1.getCoverage();
                 for(const auto &item: coverage.getCoverageMap()){
+                    cout << item.first << "-> " << lst1.convertGlyph(item.first) << endl;
                     canvas.writeGlyphPair(item.first, lst1.convertGlyph(item.first) );
                 }
             }

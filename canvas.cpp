@@ -39,12 +39,12 @@ void Canvas::loadGlyph(FT_ULong glyph_index)
         face,
         glyph_index,
         FT_LOAD_DEFAULT);
-//    if (error)
-//        throw "something error occured at FT_Load_Glyph";
+    if (error)
+        throw "something error occured at FT_Load_Glyph";
 
     error = FT_Render_Glyph(face->glyph, FT_RENDER_MODE_NORMAL);
-//    if (error)
-//        throw "something error occured at FT_Render_Glyph";
+    if (error)
+        throw "something error occured at FT_Render_Glyph";
 }
 
 void Canvas::writeGlyph(int x, int y)

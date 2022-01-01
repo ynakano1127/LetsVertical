@@ -24,7 +24,7 @@ Coverage::Coverage(FontSeeker& fs, uint32_t offset) : offset(offset)
 void Coverage::makeCoverageMap() {
     if(coverage_format == 1){
         for(int i=0; i<glyph_array.size() ;i++){
-            coverage_map.insert(std::make_pair(glyph_array.size(), glyph_array[i]));
+            coverage_map.insert(std::make_pair(glyph_array[i], i));
         }
     }else if(coverage_format == 2){
         for(int i=0; i<range_count; i++){
