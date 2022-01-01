@@ -20,6 +20,7 @@ public:
     void fillBox(int x,int y,int w,int h,uint32_t c);
     void setPixel(int x,int y,uint32_t c);
     void blendPixel(int x,int y,uint32_t c,int alpha);
+    void expand(int size, bool x_axis = false, uint32_t c = 0xffffff);
     void writeBitmap(const char *filename);
     int getWidth() { return width; };
     int getHeight() { return height; };

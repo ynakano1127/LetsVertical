@@ -29,6 +29,9 @@ public:
     void writeGlyphPair(std::vector<FT_ULong> left, std::vector<FT_ULong> right, int n=4);
     void writeString(std::string s, int x, int y);
     void writeHeading(std::string heading, int n=0);
+private:
+    void setCurX(int cur_x);
+    void setCurY(int cur_y);
 };
 
 #endif // CANVAS_H

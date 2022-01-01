@@ -178,6 +178,26 @@ void Image::blendPixel(int x,int y,uint32_t c,int alpha)
 	}
 }
 
+void Image::expand(int size, bool x_axis, uint32_t c)
+{
+    if(size < 0)
+        throw "size < 0";
+
+    int old_width = width, old_height = height;
+
+    (x_axis ? width : height) += size;
+
+    uint32_t *new_buf = new uint32_t[height * width];
+
+    for(int h = 0; h < height; h++)
+        for(int w = 0; w < width; w++)
+            new_buf[h * width + w] = (h < old_height && w < old_width)
+                    ? buf[h * old_width + w]
+                    : c;
+
+    buf = new_buf;
+}
+
 void Image::writeBitmap(const char *filename)
 {
 	FILE *fp;

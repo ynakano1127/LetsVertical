@@ -95,7 +95,7 @@ void FontAnalysisBitmap::print_script(FontSeeker& fs, Canvas& canvas, Gsub& gsub
 
 void FontAnalysisBitmap::run() {
     for(string filename : fonts2){
-        Canvas canvas(filename, 1000, 30000, 10, 50, 16, 120);
+        Canvas canvas(filename, 1000, 1000, 10, 50, 16, 120);
         canvas.writeBitmap((filename + "_analysis.bmp").c_str());
 
         FontSeeker fs(filename);

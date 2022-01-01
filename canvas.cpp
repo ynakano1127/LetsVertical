@@ -70,21 +70,21 @@ void Canvas::writeGlyphPair(FT_ULong left, FT_ULong right, int n)
     int indent = margin + indent_size * n;
 
     if(cur_x < indent)
-        cur_x = indent;
+        setCurX(indent);
 
     if(cur_x + margin * 3 + font_dot_size * 2 > getWidth()){
-        cur_x = margin + indent_size * n;
-        cur_y += font_dot_size + margin;
+        setCurX(margin + indent_size * n);
+        setCurY(cur_y + font_dot_size + margin);
     }
-    cur_x += margin;
+    setCurX(cur_x + margin);
     loadGlyph(left);
     writeGlyph(cur_x, cur_y);
 
-    cur_x += margin + font_dot_size;
+    setCurX(cur_x + margin + font_dot_size);
     loadGlyph(right);
     writeGlyph(cur_x, cur_y);
 
-    cur_x += margin + font_dot_size;
+    setCurX(cur_x + margin + font_dot_size);
     drawVLine(cur_x, cur_y - face->glyph->metrics.horiBearingY/64, font_dot_size, 0x000000);
 }
 
@@ -105,7 +105,21 @@ void Canvas::writeString(std::string s, int x, int y)
 
 void Canvas::writeHeading(std::string heading, int n)
 {
-    cur_x = margin + indent_size * n;
-    cur_y += (double)font_size/72.0 * dpi + margin;
+    setCurX(margin + indent_size * n);
+    setCurY(cur_y + (double)font_size/72.0 * dpi + margin);
     writeString(heading, cur_x,  cur_y);
+}
+
+void Canvas::setCurX(int cur_x)
+{
+    this->cur_x = cur_x;
+}
+
+void Canvas::setCurY(int cur_y)
+{
+    int font_dot_size = (double)font_size/72.0 * dpi ;
+
+    this->cur_y = cur_y;
+    if(cur_y + font_dot_size > getHeight())
+        expand(1000);
 }

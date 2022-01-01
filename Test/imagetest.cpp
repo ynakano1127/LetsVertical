@@ -51,4 +51,9 @@ void ImageTest::run()
     image.writeBitmap("output1.bmp");
     image2.writeBitmap("output2.bmp");
     image3.writeBitmap("output3.bmp");
+
+    image3.expand(100, true, 0xff0000);
+    image3.writeBitmap("output3-2.bmp");
+    image3.expand(100, false, 0x00ff00);
+    image3.writeBitmap("output3-3.bmp");
 }
