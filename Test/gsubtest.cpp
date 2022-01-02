@@ -23,6 +23,7 @@ void GsubTest::run(){
     }
 
     LangSys langsys;
+    langsys = script.getDefaultLangSys();
     for(auto lang_sys_record : script.getLangSysList()) {
         cout << "LangSysRecord Tag : " << lang_sys_record.getLangSysTag().toString() << endl;
         if(lang_sys_record.getLangSysTag().toString() == "JAN ")

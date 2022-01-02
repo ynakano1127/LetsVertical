@@ -42,10 +42,50 @@ FT_Long unicodes[] = {
     0x3084, //や
     0x3063, //っ
     0x3071, //ぱ
-    0x007C, //|
-    0x3002, //。
-    0x300D, //」
+    0x2012, //dash
+    0x2013, //dash
+    0x2014, //dash
+    0x2015, //dash
+    0x2053, //dash
+    0x2E3A, //dash
+    0x301C, //dash
+    0x3030, //dash
+    0x2010, //hyphen
+    0x002D, //hyphen
+    0x00AD, //hyphen
+    0x2011, //hyphen
+    0x2043, //hyphen
 };
+
+//FT_Long unicodes[] = {
+//    0x300C,
+//    0x4FFA,
+//    0x306F,
+//    0xFF72,
+//    0xFF74,
+//    0xFF7D,
+//    0xFF72,
+//    0xFF77,
+//    0xFF98,
+//    0xFF84,
+//    0x0021,
+//    0xFF01,
+//    0x300D,
+//};
+
+//FT_Long unicodes[] = {
+//    0x3042,
+//    0x3041,
+//    0x3041,
+//    0x2026,
+//    0x3084,
+//    0x3063,
+//    0x3061,
+//    0x307E,
+//    0x3063,
+//    0x305F,
+//    0x301C
+//};
 
 WriteTest::WriteTest()
 {
@@ -100,6 +140,7 @@ vector<LookupSubtableType1> getLST1() {
     }
 
     LangSys langsys;
+    langsys = script.getDefaultLangSys();
     for(auto lang_sys_record : script.getLangSysList()) {
         cout << "LangSysRecord Tag : " << lang_sys_record.getLangSysTag().toString() << endl;
         if(lang_sys_record.getLangSysTag().toString() == "JAN ")
@@ -181,9 +222,9 @@ void WriteTest::run()
     FT_GlyphSlot slot;
     slot = face->glyph;
     int point_x = 950, point_y = 20;
-    for (int i = 0; i < 14; i++)
+    for (auto code : unicodes)
     {
-        load_char(face, slot, unicodes[i], lst1_list);
+        load_char(face, slot, code, lst1_list);
         render(img, slot,
                point_x + face->glyph->metrics.vertBearingX/64,
                point_y + face->glyph->metrics.vertBearingY/64);
